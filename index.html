@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft - Cloud, Computers, Apps & Gaming</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #000;
+        }
+
+        /* NVIDIA Color Palette */
+        :root {
+            --nvidia-green: #76B900;
+            --nvidia-dark-green: #5d9400;
+            --nvidia-light-green: #8bc500;
+            --nvidia-black: #000000;
+            --nvidia-white: #ffffff;
+            --nvidia-gray: #1a1a1a;
+            --nvidia-light-gray: #f5f5f5;
+        }
+
+        /* Header - H&M UI Style with NVIDIA Colors */
+        .header {
+            background: var(--nvidia-black);
+            padding: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(118, 185, 0, 0.1);
+        }
+
+        .top-banner {
+            background: var(--nvidia-green);
+            color: var(--nvidia-white);
+            text-align: center;
+            padding: 8px 0;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .top-banner:hover {
+            background: var(--nvidia-dark-green);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--nvidia-white);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            color: var(--nvidia-white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 0;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--nvidia-green);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--nvidia-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-btn, .account-btn {
+            background: none;
+            border: none;
+            color: var(--nvidia-white);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .search-btn:hover, .account-btn:hover {
+            background: var(--nvidia-gray);
+        }
+
+        /* Search Bar */
+        .search-container {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            background: var(--nvidia-white);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 20px;
+            min-width: 300px;
+        }
+
+        .search-container.active {
+            display: block;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--nvidia-green);
+            border-radius: 6px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+        }
+
+        /* Hero Section - Microsoft Style with NVIDIA Colors */
+        .hero {
+            background: linear-gradient(135deg, var(--nvidia-black) 0%, var(--nvidia-gray) 100%);
+            color: var(--nvidia-white);
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%2376B900" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--nvidia-white), var(--nvidia-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: var(--nvidia-green);
+            color: var(--nvidia-white);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .cta-button:hover {
+            background: var(--nvidia-dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(118, 185, 0, 0.3);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid var(--nvidia-green);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--nvidia-green);
+        }
+
+        /* Products Grid - H&M Style Layout */
+        .products-section {
+            padding: 80px 20px;
+            background: var(--nvidia-white);
+        }
+
+        .products-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--nvidia-black);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            color: #666;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .product-card {
+            background: var(--nvidia-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(118, 185, 0, 0.2);
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--nvidia-green), var(--nvidia-dark-green));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--nvidia-white);
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 2;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="20" fill="none" stroke="white" stroke-width="0.5" opacity="0.3"/></svg>');
+            animation: rotate 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--nvidia-black);
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .product-link {
+            color: var(--nvidia-green);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .product-link:hover {
+            color: var(--nvidia-dark-green);
+        }
+
+        .product-link::after {
+            content: '→';
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-link:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* Services Section */
+        .services-section {
+            background: var(--nvidia-light-gray);
+            padding: 80px 20px;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .service-item {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--nvidia-white);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(118, 185, 0, 0.15);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--nvidia-green);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--nvidia-white);
+            font-size: 2rem;
+            transition: transform 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .service-icon img {
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+        }
+
+        .service-item:hover .service-icon {
+            transform: scale(1.1);
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--nvidia-black);
+        }
+
+        .service-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* News Section */
+        .news-section {
+            padding: 80px 20px;
+            background: var(--nvidia-white);
+        }
+
+        .news-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .news-card {
+            background: var(--nvidia-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(118, 185, 0, 0.15);
+        }
+
+        .news-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--nvidia-gray), var(--nvidia-black));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--nvidia-white);
+            font-size: 2rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .news-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 2;
+        }
+
+        .news-content {
+            padding: 25px;
+        }
+
+        .news-date {
+            color: var(--nvidia-green);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .news-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--nvidia-black);
+        }
+
+        .news-excerpt {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            color: var(--nvidia-green);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: var(--nvidia-dark-green);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--nvidia-black);
+            color: var(--nvidia-white);
+            padding: 60px 20px 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: var(--nvidia-green);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: var(--nvidia-white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--nvidia-green);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--nvidia-gray);
+            padding-top: 20px;
+            text-align: center;
+            color: #999;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: var(--nvidia-white);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--nvidia-green);
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--nvidia-green);
+            font-weight: bold;
+        }
+
+        .price-tag {
+            background: var(--nvidia-green);
+            color: var(--nvidia-white);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-container {
+                right: 10px;
+                left: 10px;
+                min-width: auto;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--nvidia-white);
+            border-radius: 50%;
+            border-top-color: var(--nvidia-green);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 120px;
+            right: 20px;
+            background: var(--nvidia-green);
+            color: var(--nvidia-white);
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(118, 185, 0, 0.3);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1500;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="top-banner" onclick="showModal('Join millions of users worldwide using Microsoft products!')">
+            🚀 Explore the latest AI innovations with Microsoft Copilot - Learn more
+        </div>
+        <nav class="nav-container">
+            <a href="#" class="logo">Microsoft</a>
+            <ul class="nav-menu">
+                <li><a href="#products">Products</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#support">Support</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#enterprise">Enterprise</a></li>
+            </ul>
+            <div class="user-actions">
+                <button class="search-btn" onclick="toggleSearch()">🔍</button>
+                <button class="account-btn" onclick="showAccountModal()">👤</button>
+                <div class="search-container" id="searchContainer">
+                    <input type="text" class="search-input" placeholder="Search Microsoft products..." onkeypress="handleSearch(event)">
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Empower every person and organization on the planet</h1>
+                <p>Achieve more with AI-powered tools, cloud services, and innovative solutions designed for the modern world.</p>
+                <a href="#products" class="cta-button">Explore Products</a>
+                <a href="#services" class="cta-button secondary">Try Free</a>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="products-section">
+            <div class="products-container">
+                <h2 class="section-title">Our Products</h2>
+                <p class="section-subtitle">Discover powerful tools and services that transform the way you work and play</p>
+                
+                <div class="products-grid">
+                    <div class="product-card" onclick="showProductDetails('Microsoft 365')">
+                        <div class="product-image">
+                            <img src="ms365.png" alt="Microsoft 365">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Microsoft 365</h3>
+                            <p class="product-description">Premium productivity apps with intelligent cloud services that transform the way you work.</p>
+                            <a href="#" class="product-link">Learn more</a>
+                        </div>
+                    </div>
+
+                    <div class="product-card" onclick="showProductDetails('Azure Cloud')">
+                        <div class="product-image">
+                            <img src="onedrive.png" alt="Azure Cloud">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Azure Cloud</h3>
+                            <p class="product-description">Build, deploy, and manage applications through Microsoft's global network of data centers.</p>
+                            <a href="#" class="product-link">Learn more</a>
+                        </div>
+                    </div>
+
+                    <div class="product-card" onclick="showProductDetails('Windows 11')">
+                        <div class="product-image">
+                            <img src="microsoft11.png" alt="Windows 11">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Windows 11</h3>
+                            <p class="product-description">The best Windows ever, designed to unlock your productivity and inspire your creativity.</p>
+                            <a href="#" class="product-link">Learn more</a>
+                        </div>
+                    </div>
+
+                    <div class="product-card" onclick="showProductDetails('Surface Devices')">
+                        <div class="product-image">
+                            <img src="surface.png" alt="Surface Devices">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Surface Devices</h3>
+                            <p class="product-description">Innovative laptops, tablets, and accessories designed for modern professionals.</p>
+                            <a href="#" class="product-link">Learn more</a>
+                        </div>
+                    </div>
+
+                    <div class="product-card" onclick="showProductDetails('Xbox Gaming')">
+                        <div class="product-image">
+                            <img src="xboxsurface.png" alt="Xbox Gaming">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Xbox Gaming</h3>
+                            <p class="product-description">Gaming experiences across console, PC, and mobile with Xbox Game Pass.</p>
+                            <a href="#" class="product-link">Learn more</a>
+                        </div>
+                    </div>
+
+                    <div class="product-card" onclick="showProductDetails('Microsoft Teams')">
+                        <div class="product-image">
+                            <img src="teams.png" alt="Microsoft Teams">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Microsoft Teams</h3>
+                            <p class="product-description">Collaborate, meet, call, and chat in one place with integrated Microsoft 365 apps.</p>
+                            <a href="#" class="product-link">Learn more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services-section">
+            <div class="services-container">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Professional services to help you succeed</p>
+                
+                <div class="services-grid">
+                    <div class="service-item" onclick="animateService(this)">
+                        <div class="service-icon">
+                            <img src="msofficesupport.png" alt="Microsoft Learn">
+                        </div>
+                        <h3 class="service-title">Microsoft Learn</h3>
+                        <p class="service-description">Free learning paths and modules to build skills with Microsoft technologies.</p>
+                    </div>
+
+                    <div class="service-item" onclick="animateService(this)">
+                        <div class="service-icon">
+                            <img src="xboxsupport.png" alt="Technical Support">
+                        </div>
+                        <h3 class="service-title">Technical Support</h3>
+                        <p class="service-description">Get help from Microsoft experts and community forums for all your technical needs.</p>
+                    </div>
+
+                    <div class="service-item" onclick="animateService(this)">
+                        <div class="service-icon">
+                            <img src="vstudio.png" alt="Consulting Services">
+                        </div>
+                        <h3 class="service-title">Consulting Services</h3>
+                        <p class="service-description">Professional guidance to help your organization adopt and optimize Microsoft solutions.</p>
+                    </div>
+
+                    <div class="service-item" onclick="animateService(this)">
+                        <div class="service-icon">
+                            <img src="edge.png" alt="Security Services">
+                        </div>
+                        <h3 class="service-title">Security Services</h3>
+                        <p class="service-description">Comprehensive security solutions to protect your data and infrastructure.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section id="news" class="news-section">
+            <div class="news-container">
+                <h2 class="section-title">Latest News</h2>
+                <p class="section-subtitle">Stay updated with the latest Microsoft innovations and announcements</p>
+                
+                <div class="news-grid">
+                    <div class="news-card" onclick="showNewsDetails('AI Revolution')">
+                        <div class="news-image">
+                            <img src="copilot.png" alt="AI Revolution">
+                        </div>
+                        <div class="news-content">
+                            <div class="news-date">May 2025</div>
+                            <h3 class="news-title">Microsoft Build 2025: The Age of AI Agents</h3>
+                            <p class="news-excerpt">Discover groundbreaking advancements in AI reasoning and memory that are transforming how we work and create.</p>
+                            <a href="#" class="read-more">Read more</a>
+                        </div>
+                    </div>
+
+                    <div class="news-card" onclick="showNewsDetails('Cloud Innovation')">
+                        <div class="news-image">
+                            <img src="onedrive.png" alt="Cloud Innovation">
+                        </div>
+                        <div class="news-content">
+                            <div class="news-date">April 2025</div>
+                            <h3 class="news-title">Azure Cloud Services Expansion</h3>
+                            <p class="news-excerpt">New Azure services and regions announced to help businesses scale globally with enhanced security and performance.</p>
+                            <a href="#" class="read-more">Read more</a>
+                        </div>
+                    </div>
+
+                    <div class="news-card" onclick="showNewsDetails('Productivity Update')">
+                        <div class="news-image">
+                            <img src="msoffice.png" alt="Productivity Update">
+                        </div>
+                        <div class="news-content">
+                            <div class="news-date">March 2025</div>
+                            <h3 class="news-title">Microsoft 365 Copilot Updates</h3>
+                            <p class="news-excerpt">Enhanced AI capabilities in Word, Excel, and PowerPoint to boost productivity and creativity for millions of users.</p>
+                            <a href="#" class="read-more">Read more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="#">Microsoft 365</a></li>
+                        <li><a href="#">Azure</a></li>
+                        <li><a href="#">Windows</a></li>
+                        <li><a href="#">Surface</a></li>
+                        <li><a href="#">Xbox</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Microsoft Learn</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Consulting</a></li>
+                        <li><a href="#">Training</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Microsoft</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">News</a></li>
+                        <li><a href="#">Investor Relations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Partner Center</a></li>
+                        <li><a href="#">Developer Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Microsoft Corporation. All rights reserved. | Privacy & Cookies | Terms of Use</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-body">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <span id="notification-text"></span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
